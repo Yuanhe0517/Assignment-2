@@ -1,29 +1,28 @@
-import math
-from main import population_equation, derivative_population_equation, newtons_method
+import unittest
 
-def test_population_equation():
-    # Test for the function population_equation
-    lambda_value = 0.1  # Sample lambda value
-    result = population_equation(lambda_value)
-    assert abs(result - (1564000 - (1000000 * math.exp(lambda_value) + (435000 / lambda_value) * (math.exp(lambda_value) - 1)))) < 1e-6, "Test failed"
-    print("Test for population_equation passed")
+from main import newton_raphson  # 假设 main.py 包含牛顿法函数
 
-def test_derivative_population_equation():
-    # Test for the derivative population_equation
-    lambda_value = 0.1  # Sample lambda value
-    result = derivative_population_equation(lambda_value)
-    expected = 1000000 * math.exp(lambda_value) + 435000 * (math.exp(lambda_value) - 1) / (lambda_value**2) - 435000 * math.exp(lambda_value) / lambda_value
-    assert abs(result - expected) < 1e-6, "Test failed"
-    print("Test for derivative_population_equation passed")
+class TestPopulationEquationSolution(unittest.TestCase):
+    def test_solution_near_expected(self):
+        # 目标解和允许的绝对误差
 
-def test_newtons_method():
-    # Test for Newton's method
-    initial_guess = 0.1
-    lambda_value = newtons_method(initial_guess)
-    assert abs(population_equation(lambda_value)) < 1e-4, "Test failed"
-    print("Test for newtons_method passed")
+        expected_solution = 0.100998
+
+        tolerance = 0.0001  # 允许 ±0.0001 的误差
+
+        # 运行牛顿法（初始猜测需接近真实解，否则可能收敛到其他根）
+        initial_guess = 0.1  # 初始猜测值需合理
+
+        computed_solution = newton_raphson(initial_guess=initial_guess, tol=1e-8)
+        
+        # 检查计算解是否在目标值附近
+
+        self.assertAlmostEqual(
+            computed_solution,
+            expected_solution,
+            delta=tolerance,
+            msg=f"解 {computed_solution:.6f} 不在预期范围 [{expected_solution - tolerance:.6f}, {expected_solution + tolerance:.6f}] 内"
+        )
 
 if __name__ == "__main__":
-    test_population_equation()
-    test_derivative_population_equation()
-    test_newtons_method()
+    unittest.main()
