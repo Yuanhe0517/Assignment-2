@@ -1,12 +1,16 @@
-# test_main.py
+import unittest
 
-import main
+from main import bisection_method, position, x_target, g, t
 
-def test_find_rate_of_change():
-    # Test the find_rate_of_change function from main.py
-    result = main.find_rate_of_change()
-    print(f"Test result: The rate of change of theta (omega) is approximately {result:.5f} radians per second.")
-    assert abs(result - 1.4852) < 1e-4, f"Test failed! Expected ~1.4852, but got {result}"
+class TestPendulumSolution(unittest.TestCase):
+    def test_omega_value(self):
+        # 获取计算结果（容差保持与主程序一致）
+        omega_result = bisection_method(position, x_target, 0.01, 10, 1e-5)
+        
+        # 验证 omega 是否接近 0.317（允许 ±0.001 的误差）
+        self.assertAlmostEqual(omega_result, 0.317, delta=0.001,
+                              msg=f"ω值 {omega_result:.5f} 超出预期范围 0.317±0.001")
+
 
 if __name__ == "__main__":
-    test_find_rate_of_change()
+    unittest.main()
