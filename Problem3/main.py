@@ -11,24 +11,22 @@ target_s = 0  # target height (ground level) in ft
 
 # Define the height function s(t)
 def height_function(t):
-    return s0 - (m * g / k) * t + (m**2 * g / k**2) * (1 - math.exp(-k * t / m))
+    return 
 
 # Fixed-point iteration method
 def fixed_point_iteration(f, target, low, high, tol=1e-5):
-    t = (low + high) / 2.0  # initial guess
-    while abs(f(t) - target) > tol:
-        t = f(t)
-    return t
+    
+    return 
 
 # Rearranged function for fixed-point iteration
 def rearranged_function(t):
-    return (s0 - (m * g / k) * t + (m**2 * g / k**2) * (1 - math.exp(-k * t / m))) / (m * g / k)
+    return 
 
 # Function to find the time to hit the ground
 def find_time_to_hit_ground():
     # Initial guess for t (lower and upper bounds)
-    t_low = 0
-    t_high = 100  # We start with an arbitrary upper bound for time
+    t_low = 
+    t_high = 
 
     # Find the time t that makes s(t) = 0 (i.e., when the object hits the ground)
     time_result = fixed_point_iteration(rearranged_function, target_s, t_low, t_high)
